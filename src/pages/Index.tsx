@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from '@/components/ui/icon';
 import {
   Accordion,
@@ -277,9 +277,25 @@ function LeadForm() {
   );
 }
 
+function useCardGlow() {
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('.glass-hover') as HTMLElement | null;
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      target.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+      target.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    };
+    document.addEventListener('mousemove', handleMove);
+    return () => document.removeEventListener('mousemove', handleMove);
+  }, []);
+}
+
 export default function Index() {
+  useCardGlow();
+
   return (
-    <div className="min-h-screen bg-nexus-black text-white font-body overflow-x-hidden">
+    <div className="min-h-screen text-white font-body overflow-x-hidden">
       {/* БЛОК 1: GLOBAL HEADER */}
       <header className="fixed top-0 inset-x-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between glass border-x-0 border-t-0">
@@ -310,6 +326,7 @@ export default function Index() {
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 grid-bg radial-fade" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/[0.04] rounded-full blur-[120px] animate-glow-pulse" />
+        <div className="absolute bottom-0 left-1/4 w-[700px] h-[700px] bg-[#2A0000]/[0.06] rounded-full blur-[140px] pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-6 md:px-10 w-full">
           <div className="max-w-4xl animate-fade-up">
             <Kicker>Enterprise-Grade Acquisition</Kicker>

@@ -98,10 +98,35 @@
   body {
     @apply bg-background text-foreground;
     background-color: #000000;
+    background-image: radial-gradient(
+      ellipse 90% 70% at 50% 0%,
+      #121212 0%,
+      #000000 60%
+    );
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: #ffffff;
     font-family: "Golos Text", sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
   }
 
   ::selection {
@@ -114,9 +139,12 @@
   .glass {
     background: #0a0a0a;
     border: 1px solid #1c1c1e;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
   }
 
   .glass-hover {
+    position: relative;
+    overflow: hidden;
     transition:
       border-color 0.3s ease,
       background 0.3s ease;
@@ -124,6 +152,28 @@
   .glass-hover:hover {
     border-color: rgba(255, 255, 255, 0.16);
     background: #0d0d0d;
+  }
+  .glass-hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      280px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.07),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .glass-hover:hover::before {
+    opacity: 1;
+  }
+  .glass-hover > * {
+    position: relative;
+    z-index: 1;
   }
 
   .grid-bg {
