@@ -97,5 +97,69 @@
 
   body {
     @apply bg-background text-foreground;
+    background-color: #030303;
+    color: #ffffff;
+    font-family: "Golos Text", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: #ffffff;
+    color: #030303;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid #1c1c1e;
+  }
+
+  .glass-hover {
+    transition:
+      border-color 0.4s ease,
+      background 0.4s ease,
+      transform 0.4s ease;
+  }
+  .glass-hover:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(18, 18, 18, 0.7);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px
+      );
+    background-size: 60px 60px;
+  }
+
+  .radial-fade {
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      #000 40%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+
+  .text-gradient {
+    background: linear-gradient(180deg, #ffffff 0%, #6b6b70 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
