@@ -24,10 +24,12 @@ export default {
 			},
 			colors: {
 				nexus: {
-					black: '#030303',
+					black: '#000000',
 					graphite: '#0A0A0A',
 					line: '#1C1C1E',
 					gray: '#8A8A8E',
+					red: '#FF0F0F',
+					redDark: '#CC0C0C',
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

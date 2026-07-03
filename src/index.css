@@ -97,35 +97,33 @@
 
   body {
     @apply bg-background text-foreground;
-    background-color: #030303;
+    background-color: #000000;
     color: #ffffff;
     font-family: "Golos Text", sans-serif;
     -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
   }
 
   ::selection {
-    background: #ffffff;
-    color: #030303;
+    background: #ff0f0f;
+    color: #ffffff;
   }
 }
 
 @layer utilities {
   .glass {
-    background: rgba(10, 10, 10, 0.55);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: #0a0a0a;
     border: 1px solid #1c1c1e;
   }
 
   .glass-hover {
     transition:
-      border-color 0.4s ease,
-      background 0.4s ease,
-      transform 0.4s ease;
+      border-color 0.3s ease,
+      background 0.3s ease;
   }
   .glass-hover:hover {
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(18, 18, 18, 0.7);
+    border-color: rgba(255, 255, 255, 0.16);
+    background: #0d0d0d;
   }
 
   .grid-bg {
@@ -157,9 +155,14 @@
   }
 
   .text-gradient {
-    background: linear-gradient(180deg, #ffffff 0%, #6b6b70 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffffff;
+  }
+
+  .btn-accent {
+    background-color: #ff0f0f;
+    transition: background-color 0.25s ease;
+  }
+  .btn-accent:hover {
+    background-color: #cc0c0c;
   }
 }

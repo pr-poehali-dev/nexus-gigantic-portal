@@ -155,7 +155,7 @@ const Section = ({
   id?: string;
   className?: string;
 }) => (
-  <section id={id} className={`px-6 md:px-10 py-[120px] max-w-7xl mx-auto ${className}`}>
+  <section id={id} className={`px-6 md:px-10 py-[140px] max-w-7xl mx-auto ${className}`}>
     {children}
   </section>
 );
@@ -240,11 +240,11 @@ function LeadForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Корпоративный Email"
-          className={`w-full bg-nexus-graphite border rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
-            errors.email ? 'border-red-500/60' : 'border-nexus-line focus:border-white/30'
+          className={`w-full bg-nexus-graphite border rounded-[10px] px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
+            errors.email ? 'border-nexus-red' : 'border-nexus-line focus:border-nexus-red'
           }`}
         />
-        {errors.email && <p className="text-red-400 text-sm mt-2 pl-1">{errors.email}</p>}
+        {errors.email && <p className="text-nexus-red text-sm mt-2 pl-1">{errors.email}</p>}
       </div>
       <div>
         <input
@@ -252,17 +252,17 @@ function LeadForm() {
           value={telegram}
           onChange={(e) => setTelegram(e.target.value)}
           placeholder="Telegram для связи"
-          className={`w-full bg-nexus-graphite border rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
-            errors.telegram ? 'border-red-500/60' : 'border-nexus-line focus:border-white/30'
+          className={`w-full bg-nexus-graphite border rounded-[10px] px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
+            errors.telegram ? 'border-nexus-red' : 'border-nexus-line focus:border-nexus-red'
           }`}
         />
-        {errors.telegram && <p className="text-red-400 text-sm mt-2 pl-1">{errors.telegram}</p>}
+        {errors.telegram && <p className="text-nexus-red text-sm mt-2 pl-1">{errors.telegram}</p>}
       </div>
-      {serverError && <p className="text-red-400 text-sm pl-1">{serverError}</p>}
+      {serverError && <p className="text-nexus-red text-sm pl-1">{serverError}</p>}
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full bg-white text-nexus-black font-semibold px-8 py-4 rounded-xl hover:bg-white/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full bg-nexus-red hover:bg-nexus-redDark text-white font-semibold px-8 py-4 rounded-[10px] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {status === 'loading' ? (
           <>
@@ -300,7 +300,7 @@ export default function Index() {
               </a>
             ))}
           </nav>
-          <button className="text-sm font-medium px-5 py-2.5 rounded-lg border border-nexus-line bg-transparent hover:bg-white/5 transition-colors">
+          <button className="text-sm font-medium px-5 py-2.5 rounded-[10px] bg-nexus-red hover:bg-nexus-redDark text-white transition-colors">
             Запросить доступ
           </button>
         </div>
@@ -313,7 +313,7 @@ export default function Index() {
         <div className="relative max-w-7xl mx-auto px-6 md:px-10 w-full">
           <div className="max-w-4xl animate-fade-up">
             <Kicker>Enterprise-Grade Acquisition</Kicker>
-            <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.05] tracking-tight text-gradient mb-8">
+            <h1 className="font-display font-black text-5xl md:text-7xl leading-[1.15] tracking-tight text-white mb-8">
               Эволюция лидогенерации для финансового сектора
             </h1>
             <p className="text-lg md:text-xl text-nexus-gray max-w-2xl leading-relaxed mb-12">
@@ -328,7 +328,7 @@ export default function Index() {
                 </div>
               ))}
             </div>
-            <button className="inline-flex items-center gap-2 bg-white text-nexus-black font-semibold px-8 py-4 rounded-xl hover:bg-white/90 transition-colors">
+            <button className="inline-flex items-center gap-2 bg-nexus-red hover:bg-nexus-redDark text-white font-semibold px-8 py-4 rounded-[10px] transition-colors">
               Назначить сессию
               <Icon name="ArrowRight" size={18} />
             </button>
@@ -354,12 +354,12 @@ export default function Index() {
       {/* БЛОК 4: ПРОБЛЕМАТИКА РЫНКА */}
       <Section id="platform">
         <Kicker>Market Analysis</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Системный кризис Performance
         </h2>
         <div className="grid md:grid-cols-2 gap-5">
           {PROBLEMS.map((p) => (
-            <div key={p.title} className="glass glass-hover rounded-3xl p-8 md:p-10">
+            <div key={p.title} className="glass glass-hover rounded-2xl p-8 md:p-10">
               <div className="w-12 h-12 rounded-xl border border-nexus-line flex items-center justify-center mb-6">
                 <Icon name={p.icon} size={22} className="text-white" />
               </div>
@@ -372,11 +372,11 @@ export default function Index() {
 
       {/* БЛОК 5: РЕШЕНИЕ */}
       <Section>
-        <div className="glass rounded-[2.5rem] p-10 md:p-20 text-center max-w-4xl mx-auto relative overflow-hidden">
+        <div className="glass rounded-[20px] p-10 md:p-20 text-center max-w-4xl mx-auto relative overflow-hidden">
           <div className="absolute inset-0 grid-bg opacity-40" />
           <div className="relative">
             <Kicker>Solution</Kicker>
-            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-8">
+            <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-8">
               Boutique Anti-Fraud Engine
             </h2>
             <p className="text-lg md:text-xl text-nexus-gray leading-relaxed max-w-2xl mx-auto">
@@ -390,14 +390,14 @@ export default function Index() {
       {/* БЛОК 6: АРХИТЕКТУРА СЕТИ */}
       <Section id="infrastructure">
         <Kicker>Infrastructure</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Инфраструктура качества
         </h2>
         <div className="space-y-5">
           {ARCHITECTURE.map((a) => (
             <div
               key={a.step}
-              className="glass glass-hover rounded-3xl p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-12"
+              className="glass glass-hover rounded-2xl p-8 md:p-10 flex flex-col md:flex-row md:items-center gap-6 md:gap-12"
             >
               <div className="font-display font-extrabold text-5xl md:text-6xl text-white/15 shrink-0 w-24">
                 {a.step}
@@ -414,7 +414,7 @@ export default function Index() {
       {/* БЛОК 7: ВЕРТИКАЛИ */}
       <Section id="verticals">
         <Kicker>Verticals</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Масштабируем финтех
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -435,11 +435,11 @@ export default function Index() {
         <div className="grid md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-center">
           <div>
             <Kicker>Compliance</Kicker>
-            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight leading-tight">
+            <h2 className="font-display font-black text-4xl md:text-5xl tracking-tight leading-[1.2]">
               Траст институционального уровня
             </h2>
           </div>
-          <div className="glass rounded-3xl p-8 md:p-12">
+          <div className="glass rounded-2xl p-8 md:p-12">
             <Icon name="ShieldCheck" size={32} className="text-white mb-6" />
             <p className="text-lg text-nexus-gray leading-relaxed">
               Мы понимаем жесткие требования служб безопасности финтех-корпораций. Никаких накруток
@@ -452,12 +452,12 @@ export default function Index() {
       {/* БЛОК 9: ONBOARDING */}
       <Section>
         <Kicker>Onboarding</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Протокол запуска за 48 часов
         </h2>
         <div className="grid md:grid-cols-2 gap-5">
           {ONBOARDING.map((o, i) => (
-            <div key={i} className="glass glass-hover rounded-3xl p-8 flex items-start gap-6">
+            <div key={i} className="glass glass-hover rounded-2xl p-8 flex items-start gap-6">
               <div className="font-display font-extrabold text-2xl text-white/25 shrink-0">
                 0{i + 1}
               </div>
@@ -469,15 +469,15 @@ export default function Index() {
 
       {/* БЛОК 10: API & ТЕХНОЛОГИИ */}
       <Section>
-        <div className="glass rounded-[2.5rem] p-10 md:p-16 grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-center">
+        <div className="glass rounded-[20px] p-10 md:p-16 grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-center">
           <div className="flex items-center justify-center">
-            <div className="w-40 h-40 rounded-3xl border border-nexus-line grid-bg flex items-center justify-center">
+            <div className="w-40 h-40 rounded-2xl border border-nexus-line grid-bg flex items-center justify-center">
               <Icon name="Webhook" size={56} className="text-white" />
             </div>
           </div>
           <div>
             <Kicker>Technology</Kicker>
-            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-6">
+            <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-6">
               Enterprise API
             </h2>
             <p className="text-lg text-nexus-gray leading-relaxed">
@@ -492,7 +492,7 @@ export default function Index() {
       {/* БЛОК 11: БЕЗОПАСНОСТЬ */}
       <Section>
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-16 items-center">
-          <div className="glass rounded-3xl p-8 md:p-12 order-2 md:order-1">
+          <div className="glass rounded-2xl p-8 md:p-12 order-2 md:order-1">
             <Icon name="Lock" size={32} className="text-white mb-6" />
             <p className="text-lg text-nexus-gray leading-relaxed">
               Работа с финансовым трафиком требует абсолютной конфиденциальности. Мы не храним данные
@@ -501,7 +501,7 @@ export default function Index() {
           </div>
           <div className="order-1 md:order-2">
             <Kicker>Security</Kicker>
-            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight leading-tight">
+            <h2 className="font-display font-black text-4xl md:text-5xl tracking-tight leading-[1.2]">
               Data Security &amp; Privacy
             </h2>
           </div>
@@ -513,7 +513,7 @@ export default function Index() {
         <div className="relative text-center max-w-4xl mx-auto">
           <Icon name="Crown" size={40} className="text-white/40 mx-auto mb-8" />
           <Kicker>Exclusivity</Kicker>
-          <h2 className="font-display font-extrabold text-4xl md:text-6xl tracking-tight mb-8 text-gradient">
+          <h2 className="font-display font-black text-4xl md:text-6xl leading-[1.2] tracking-tight mb-8 text-white">
             Бутиковый подход
           </h2>
           <p className="text-lg md:text-xl text-nexus-gray leading-relaxed">
@@ -527,7 +527,7 @@ export default function Index() {
       {/* БЛОК 13: ЭКОСИСТЕМА */}
       <Section>
         <Kicker>Ecosystem</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Интегрируемся с лидерами
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -545,10 +545,10 @@ export default function Index() {
       {/* БЛОК: ПРЕИМУЩЕСТВА (СРАВНИТЕЛЬНАЯ ТАБЛИЦА) */}
       <Section>
         <Kicker>Comparison</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Преимущества
         </h2>
-        <div className="glass rounded-3xl overflow-hidden">
+        <div className="glass rounded-2xl overflow-hidden">
           <div className="grid grid-cols-3">
             <div className="p-6 md:p-8 text-sm text-nexus-gray uppercase tracking-wider">
               Критерий
@@ -581,9 +581,9 @@ export default function Index() {
 
       {/* БЛОК: SLA И ГАРАНТИИ */}
       <Section>
-        <div className="glass rounded-[2.5rem] p-10 md:p-16 grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-center">
+        <div className="glass rounded-[20px] p-10 md:p-16 grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-center">
           <div className="flex items-center justify-center">
-            <div className="w-40 h-40 rounded-3xl border border-nexus-line grid-bg flex items-center justify-center">
+            <div className="w-40 h-40 rounded-2xl border border-nexus-line grid-bg flex items-center justify-center">
               <Icon name="BadgeCheck" size={56} className="text-white" />
             </div>
           </div>
@@ -614,7 +614,7 @@ export default function Index() {
           {SCORING_LEVELS.map((level, i) => (
             <div
               key={level}
-              className="glass glass-hover rounded-3xl p-8 flex items-center gap-6"
+              className="glass glass-hover rounded-2xl p-8 flex items-center gap-6"
             >
               <div className="font-display font-extrabold text-2xl text-white/25 shrink-0 w-10">
                 {String(i + 1).padStart(2, '0')}
@@ -628,10 +628,10 @@ export default function Index() {
       {/* БЛОК: FAQ */}
       <Section>
         <Kicker>FAQ</Kicker>
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+        <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-16 max-w-2xl">
           Частые вопросы
         </h2>
-        <div className="glass rounded-3xl px-8 md:px-10">
+        <div className="glass rounded-2xl px-8 md:px-10">
           <Accordion type="single" collapsible>
             {FAQ.map((item, i) => (
               <AccordionItem
@@ -653,12 +653,12 @@ export default function Index() {
 
       {/* БЛОК 14: LEAD FORM */}
       <Section id="contacts">
-        <div className="glass rounded-[2.5rem] p-10 md:p-16 max-w-2xl mx-auto relative overflow-hidden">
+        <div className="glass rounded-[20px] p-10 md:p-16 max-w-2xl mx-auto relative overflow-hidden">
           <div className="absolute inset-0 grid-bg opacity-30" />
           <div className="relative">
             <div className="text-center mb-10">
               <Kicker>Integration</Kicker>
-              <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-4">
+              <h2 className="font-display font-black text-4xl md:text-5xl leading-[1.2] tracking-tight mb-4">
                 Начать интеграцию
               </h2>
               <p className="text-nexus-gray">Запросите медиаплан и NDA.</p>
