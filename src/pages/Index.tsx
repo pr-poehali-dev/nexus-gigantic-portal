@@ -1,4 +1,10 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+
+const LEAD_URL = 'https://functions.poehali.dev/899924fb-543f-4fc5-95ce-0bb69ed7bb1f';
+
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const TELEGRAM_RE = /^@?[a-zA-Z0-9_]{5,32}$/;
 
 const NAV = ['Платформа', 'Инфраструктура', 'Вертикали', 'Комплаенс'];
 
@@ -82,6 +88,117 @@ const Kicker = ({ children }: { children: React.ReactNode }) => (
     {children}
   </span>
 );
+
+function LeadForm() {
+  const [email, setEmail] = useState('');
+  const [telegram, setTelegram] = useState('');
+  const [errors, setErrors] = useState<{ email?: string; telegram?: string }>({});
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [serverError, setServerError] = useState('');
+
+  const validate = () => {
+    const next: { email?: string; telegram?: string } = {};
+    if (!EMAIL_RE.test(email.trim())) next.email = 'Укажите корректный корпоративный Email';
+    if (!TELEGRAM_RE.test(telegram.trim()))
+      next.telegram = 'Формат: @username (от 5 символов)';
+    setErrors(next);
+    return Object.keys(next).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setServerError('');
+    if (!validate()) return;
+    setStatus('loading');
+    try {
+      const res = await fetch(LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), telegram: telegram.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        if (data.errors) {
+          setErrors(data.errors);
+          setStatus('idle');
+          return;
+        }
+        throw new Error('request failed');
+      }
+      setStatus('success');
+      setEmail('');
+      setTelegram('');
+    } catch {
+      setStatus('error');
+      setServerError('Не удалось отправить заявку. Попробуйте позже.');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="text-center py-10 animate-fade-up">
+        <div className="w-16 h-16 rounded-2xl border border-nexus-line flex items-center justify-center mx-auto mb-6">
+          <Icon name="Check" size={32} className="text-white" />
+        </div>
+        <h3 className="font-display font-bold text-2xl mb-3">Заявка отправлена</h3>
+        <p className="text-nexus-gray max-w-sm mx-auto">
+          Мы получили ваш запрос и свяжемся в Telegram в ближайшее время для передачи медиаплана и
+          NDA.
+        </p>
+        <button
+          onClick={() => setStatus('idle')}
+          className="mt-8 text-sm text-nexus-gray hover:text-white transition-colors"
+        >
+          Отправить ещё одну заявку
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+      <div>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Корпоративный Email"
+          className={`w-full bg-nexus-graphite border rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
+            errors.email ? 'border-red-500/60' : 'border-nexus-line focus:border-white/30'
+          }`}
+        />
+        {errors.email && <p className="text-red-400 text-sm mt-2 pl-1">{errors.email}</p>}
+      </div>
+      <div>
+        <input
+          type="text"
+          value={telegram}
+          onChange={(e) => setTelegram(e.target.value)}
+          placeholder="Telegram для связи"
+          className={`w-full bg-nexus-graphite border rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none transition-colors ${
+            errors.telegram ? 'border-red-500/60' : 'border-nexus-line focus:border-white/30'
+          }`}
+        />
+        {errors.telegram && <p className="text-red-400 text-sm mt-2 pl-1">{errors.telegram}</p>}
+      </div>
+      {serverError && <p className="text-red-400 text-sm pl-1">{serverError}</p>}
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="w-full bg-white text-nexus-black font-semibold px-8 py-4 rounded-xl hover:bg-white/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        {status === 'loading' ? (
+          <>
+            <Icon name="Loader2" size={18} className="animate-spin" />
+            Отправка...
+          </>
+        ) : (
+          'Отправить запрос'
+        )}
+      </button>
+    </form>
+  );
+}
 
 export default function Index() {
   return (
@@ -360,24 +477,7 @@ export default function Index() {
               </h2>
               <p className="text-nexus-gray">Запросите медиаплан и NDA.</p>
             </div>
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Корпоративный Email"
-                className="w-full bg-nexus-graphite border border-nexus-line rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none focus:border-white/30 transition-colors"
-              />
-              <input
-                type="text"
-                placeholder="Telegram для связи"
-                className="w-full bg-nexus-graphite border border-nexus-line rounded-xl px-5 py-4 text-white placeholder:text-nexus-gray focus:outline-none focus:border-white/30 transition-colors"
-              />
-              <button
-                type="submit"
-                className="w-full bg-white text-nexus-black font-semibold px-8 py-4 rounded-xl hover:bg-white/90 transition-colors"
-              >
-                Отправить запрос
-              </button>
-            </form>
+            <LeadForm />
           </div>
         </div>
       </Section>
