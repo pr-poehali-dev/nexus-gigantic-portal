@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const LEAD_URL = 'https://functions.poehali.dev/899924fb-543f-4fc5-95ce-0bb69ed7bb1f';
 
@@ -68,6 +74,36 @@ const ONBOARDING = [
 ];
 
 const ECOSYSTEM = ['Т-Банк', 'Альфа-Банк', 'ВТБ', 'Газпромбанк', 'Сбер'];
+
+const COMPARISON = [
+  { criterion: 'Качество лида', others: 'Низкое (автоматика)', nexus: 'Высокое (Human QA)' },
+  { criterion: 'Прозрачность антифрода', others: 'Скрыто', nexus: 'Полная отчетность' },
+  { criterion: 'Связь с фаундером', others: 'Нет', nexus: 'Прямой доступ' },
+  { criterion: 'Скорость интеграции', others: 'Долго', nexus: '24-48 часов' },
+];
+
+const SCORING_LEVELS = [
+  'Fingerprint-анализ устройства',
+  'Валидация по IP и User-Agent',
+  'Анализ транзакционной активности',
+  'Проверка по внутренней антифрод-базе',
+  'Финальный ручной контроль скаут-менеджером',
+];
+
+const FAQ = [
+  {
+    q: 'Как вы боретесь с фродом?',
+    a: 'Используем собственную систему NexusShield и ручную верификацию каждого действия.',
+  },
+  {
+    q: 'Какие объемы вы даете?',
+    a: 'Масштабируемся от 100 до 5000+ целевых действий в месяц под требования банка.',
+  },
+  {
+    q: 'Нужна ли от нас техническая интеграция?',
+    a: 'Интеграция возможна через Postback, API или виджеты, настройка занимает не более 1 дня.',
+  },
+];
 
 const Section = ({
   children,
@@ -462,6 +498,115 @@ export default function Index() {
               {e}
             </div>
           ))}
+        </div>
+      </Section>
+
+      {/* БЛОК: ПРЕИМУЩЕСТВА (СРАВНИТЕЛЬНАЯ ТАБЛИЦА) */}
+      <Section>
+        <Kicker>Comparison</Kicker>
+        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+          Преимущества
+        </h2>
+        <div className="glass rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-3">
+            <div className="p-6 md:p-8 text-sm text-nexus-gray uppercase tracking-wider">
+              Критерий
+            </div>
+            <div className="p-6 md:p-8 text-sm text-nexus-gray uppercase tracking-wider border-l border-nexus-line">
+              Обычные CPA-сети
+            </div>
+            <div className="p-6 md:p-8 text-sm uppercase tracking-wider border-l border-nexus-line font-semibold">
+              Nexus Media
+            </div>
+          </div>
+          {COMPARISON.map((row, i) => (
+            <div
+              key={row.criterion}
+              className={`grid grid-cols-3 ${i !== 0 ? 'border-t border-nexus-line' : 'border-t border-nexus-line'}`}
+            >
+              <div className="p-6 md:p-8 font-medium">{row.criterion}</div>
+              <div className="p-6 md:p-8 border-l border-nexus-line text-nexus-gray flex items-center gap-2">
+                <Icon name="X" size={16} className="text-nexus-gray shrink-0" />
+                {row.others}
+              </div>
+              <div className="p-6 md:p-8 border-l border-nexus-line flex items-center gap-2">
+                <Icon name="Check" size={16} className="text-white shrink-0" />
+                {row.nexus}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* БЛОК: SLA И ГАРАНТИИ */}
+      <Section>
+        <div className="glass rounded-[2.5rem] p-10 md:p-16 grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-center">
+          <div className="flex items-center justify-center">
+            <div className="w-40 h-40 rounded-3xl border border-nexus-line grid-bg flex items-center justify-center">
+              <Icon name="BadgeCheck" size={56} className="text-white" />
+            </div>
+          </div>
+          <div>
+            <Kicker>SLA</Kicker>
+            <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-6">
+              Гарантии качества и SLA
+            </h2>
+            <p className="text-lg text-nexus-gray leading-relaxed">
+              Мы работаем по жесткому SLA. Время ответа менеджера — до 30 минут. Гарантия
+              окупаемости трафика при соблюдении медиаплана. Юридическое сопровождение каждого
+              лида и прямые контракты с рекламодателями.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* БЛОК: ТЕХНОЛОГИЧЕСКИЙ СКОРИНГ */}
+      <Section>
+        <Kicker>Scoring</Kicker>
+        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-4 max-w-2xl">
+          Многоуровневый фильтр трафика
+        </h2>
+        <p className="text-lg text-nexus-gray leading-relaxed mb-16 max-w-2xl">
+          Каждый входящий запрос проходит 5-уровневую проверку перед передачей в банк:
+        </p>
+        <div className="space-y-5">
+          {SCORING_LEVELS.map((level, i) => (
+            <div
+              key={level}
+              className="glass glass-hover rounded-3xl p-8 flex items-center gap-6"
+            >
+              <div className="font-display font-extrabold text-2xl text-white/25 shrink-0 w-10">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <p className="text-lg leading-relaxed">{level}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* БЛОК: FAQ */}
+      <Section>
+        <Kicker>FAQ</Kicker>
+        <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
+          Частые вопросы
+        </h2>
+        <div className="glass rounded-3xl px-8 md:px-10">
+          <Accordion type="single" collapsible>
+            {FAQ.map((item, i) => (
+              <AccordionItem
+                key={item.q}
+                value={`item-${i}`}
+                className="border-nexus-line"
+              >
+                <AccordionTrigger className="text-left text-lg font-medium hover:no-underline py-7">
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-nexus-gray text-base leading-relaxed pb-7">
+                  {item.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </Section>
 
