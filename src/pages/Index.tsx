@@ -64,7 +64,16 @@ const ARCHITECTURE = [
   },
 ];
 
-const VERTICALS = ['Дебетовые карты', 'Кредитные карты', 'Премиум сегмент', 'РКО', 'Брокерские счета'];
+const VERTICALS = [
+  'Дебетовые карты',
+  'Кредитные карты',
+  'Премиум сегмент',
+  'РКО',
+  'Брокерские счета',
+  'Автокредиты',
+  'Ипотечные продукты',
+  'Вклады и накопительные',
+];
 
 const ONBOARDING = [
   'Подписание NDA и фиксация CPA.',
@@ -73,7 +82,19 @@ const ONBOARDING = [
   'Анализ качества и анлок бюджетов.',
 ];
 
-const ECOSYSTEM = ['Т-Банк', 'Альфа-Банк', 'ВТБ', 'Газпромбанк', 'Сбер'];
+const ECOSYSTEM = [
+  'Т-Банк',
+  'Альфа-Банк',
+  'ВТБ',
+  'Газпромбанк',
+  'Сбер',
+  'Озон Банк',
+  'ОТП Банк',
+  'Точка',
+  'Уралсиб',
+  'Совкомбанк',
+  'Контур',
+];
 
 const COMPARISON = [
   { criterion: 'Качество лида', others: 'Низкое (автоматика)', nexus: 'Высокое (Human QA)' },
@@ -102,6 +123,26 @@ const FAQ = [
   {
     q: 'Нужна ли от нас техническая интеграция?',
     a: 'Интеграция возможна через Postback, API или виджеты, настройка занимает не более 1 дня.',
+  },
+  {
+    q: 'Как вы проверяете качество лидов?',
+    a: 'Каждый лид проходит 5-уровневую проверку: Fingerprint-анализ устройства, валидация по IP, анализ истории активности, проверка по антифрод-базе и финальный ручной контроль.',
+  },
+  {
+    q: 'Возможна ли работа по NDA?',
+    a: 'Да, мы работаем строго по договору NDA и обеспечиваем полную конфиденциальность данных.',
+  },
+  {
+    q: 'Какой средний LTV лидов?',
+    a: 'Мы оптимизируем кампании под высокий LTV, ориентируясь на целевые действия, а не просто на выдачу.',
+  },
+  {
+    q: 'Как быстро вы масштабируете связки?',
+    a: 'Масштабируем объемы в течение 24-48 часов после подтверждения качества на тестовом проливе.',
+  },
+  {
+    q: 'Предоставляете ли вы отчетность?',
+    a: 'Да, предоставляем логи по каждому лиду и еженедельную аналитику.',
   },
 ];
 
@@ -376,13 +417,13 @@ export default function Index() {
         <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
           Масштабируем финтех
         </h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {VERTICALS.map((v) => (
             <div
               key={v}
-              className="glass glass-hover rounded-2xl px-8 py-6 flex items-center gap-3 text-lg font-medium"
+              className="glass glass-hover rounded-2xl px-6 py-6 flex items-center gap-3 text-lg font-medium"
             >
-              <Icon name="CreditCard" size={20} className="text-nexus-gray" />
+              <Icon name="CreditCard" size={20} className="text-nexus-gray shrink-0" />
               {v}
             </div>
           ))}
@@ -489,7 +530,7 @@ export default function Index() {
         <h2 className="font-display font-extrabold text-4xl md:text-5xl tracking-tight mb-16 max-w-2xl">
           Интегрируемся с лидерами
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {ECOSYSTEM.map((e) => (
             <div
               key={e}
