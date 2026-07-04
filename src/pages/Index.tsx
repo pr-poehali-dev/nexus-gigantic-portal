@@ -6,13 +6,39 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+import { useToast } from '@/hooks/use-toast';
 
 const LEAD_URL = 'https://functions.poehali.dev/899924fb-543f-4fc5-95ce-0bb69ed7bb1f';
 
 const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const TELEGRAM_RE = /^@?[a-zA-Z0-9_]{5,32}$/;
 
-const NAV = ['Платформа', 'Инфраструктура', 'Вертикали', 'Комплаенс'];
+const NAV = [
+  { label: 'Платформа', href: '#platform' },
+  { label: 'Инфраструктура', href: '#infrastructure' },
+  { label: 'Вертикали', href: '#verticals' },
+  { label: 'Комплаенс', href: '#compliance' },
+];
+
+const LEGAL_DOCS = {
+  antiFraud: {
+    title: 'Anti-Fraud Policy',
+    description:
+      'Мы применяем многоуровневую систему проверки трафика: Fingerprint-анализ устройства, валидацию по IP и User-Agent, анализ транзакционной активности и ручной контроль скаут-менеджером. Любые накрутки, боты и мотивированный трафик исключены на уровне договора с каждым источником.',
+  },
+  dataPrivacy: {
+    title: 'Data Privacy',
+    description:
+      'Персональные данные лидов обрабатываются в изолированных контурах с шифрованием AES-256 и не хранятся на публичных серверах. Доступ к данным ограничен и предоставляется только верифицированным сотрудникам банка-партнёра в рамках NDA.',
+  },
+};
 
 const HERO_METRICS = [
   { value: '0%', label: 'Fraud' },
@@ -293,6 +319,20 @@ function useCardGlow() {
 
 export default function Index() {
   useCardGlow();
+  const { toast } = useToast();
+  const [legalOpen, setLegalOpen] = useState<'antiFraud' | 'dataPrivacy' | null>(null);
+
+  const scrollToContacts = () => {
+    document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleRequestAccess = () => {
+    toast({
+      title: 'Заявка на доступ',
+      description: 'Заполните форму ниже — мы свяжемся с вами для предоставления доступа к платформе.',
+    });
+    scrollToContacts();
+  };
 
   return (
     <div className="min-h-screen text-white font-body overflow-x-hidden">
@@ -308,15 +348,18 @@ export default function Index() {
           <nav className="hidden lg:flex items-center gap-10">
             {NAV.map((item) => (
               <a
-                key={item}
-                href="#"
+                key={item.href}
+                href={item.href}
                 className="text-sm text-nexus-gray hover:text-white transition-colors"
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </nav>
-          <button className="text-sm font-medium px-5 py-2.5 rounded-[10px] bg-nexus-red hover:bg-nexus-redDark text-white transition-colors">
+          <button
+            onClick={handleRequestAccess}
+            className="text-sm font-medium px-5 py-2.5 rounded-[10px] bg-nexus-red hover:bg-nexus-redDark text-white transition-colors"
+          >
             Запросить доступ
           </button>
         </div>
@@ -345,7 +388,10 @@ export default function Index() {
                 </div>
               ))}
             </div>
-            <button className="inline-flex items-center gap-2 bg-nexus-red hover:bg-nexus-redDark text-white font-semibold px-8 py-4 rounded-[10px] transition-colors">
+            <button
+              onClick={scrollToContacts}
+              className="inline-flex items-center gap-2 bg-nexus-red hover:bg-nexus-redDark text-white font-semibold px-8 py-4 rounded-[10px] transition-colors"
+            >
               Назначить сессию
               <Icon name="ArrowRight" size={18} />
             </button>
@@ -710,14 +756,20 @@ export default function Index() {
             <div className="text-xs uppercase tracking-widest text-nexus-gray mb-4">Документы</div>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-nexus-gray hover:text-white transition-colors">
+                <button
+                  onClick={() => setLegalOpen('antiFraud')}
+                  className="text-nexus-gray hover:text-white transition-colors"
+                >
                   Anti-Fraud Policy
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#" className="text-nexus-gray hover:text-white transition-colors">
+                <button
+                  onClick={() => setLegalOpen('dataPrivacy')}
+                  className="text-nexus-gray hover:text-white transition-colors"
+                >
                   Data Privacy
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -726,6 +778,19 @@ export default function Index() {
           © 2026 Nexus Media.
         </div>
       </footer>
+
+      <Dialog open={legalOpen !== null} onOpenChange={(open) => !open && setLegalOpen(null)}>
+        <DialogContent className="bg-nexus-graphite border-nexus-line text-white rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="font-display font-bold text-2xl">
+              {legalOpen && LEGAL_DOCS[legalOpen].title}
+            </DialogTitle>
+            <DialogDescription className="text-nexus-gray leading-relaxed pt-2">
+              {legalOpen && LEGAL_DOCS[legalOpen].description}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
